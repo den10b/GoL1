@@ -15,6 +15,7 @@ func main() {
 
 	fmt.Printf("Бит на позиции %d должен стать %d\n", i, val)
 	var result int64
+
 	switch val {
 	case 0:
 		temp := int64(math.Pow(2, 64)) - 1
@@ -30,6 +31,7 @@ func main() {
 		result = mask | num //Применяем бинарное ИЛИ, которое изменяет только целевой бит
 
 	}
+
 	fmt.Printf("%65b\n", result)
 	fmt.Printf("Резулльтат %d\n", result)
 }
