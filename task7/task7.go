@@ -39,10 +39,8 @@ func (mapp *mapThread) mapThreadReadAll() {
 func mapThreadWriteChan(i int) {
 	mapp2 := <-ch //тк канал не буферизированный каждая горутина ждет пока другая горутина положит map в канал
 	mapp2.numbers[i] = i
-	if len(mapp2.numbers) < 100 {
-		ch <- mapp2 // таком случае единовременно запись в канал может исполнять только одна горутина
-	}
 	wg.Done()
+	ch <- mapp2 // таком случае единовременно запись в канал может исполнять только одна горутина
 }
 
 func main() {
@@ -75,6 +73,7 @@ func main() {
 		numbers: map[int]int{},
 	}
 	wg.Wait()
+	mapp = <-ch
 	fmt.Println(mapp)
 
 }
