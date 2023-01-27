@@ -64,6 +64,9 @@ func main() {
 	}
 	wg.Wait()
 
+	mapp = mapThread{
+		numbers: map[int]int{},
+	}
 	wg.Add(n)
 	ch = make(chan mapThread)
 	for i := 0; i < n; i++ {
