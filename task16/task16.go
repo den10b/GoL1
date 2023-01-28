@@ -4,7 +4,7 @@ import "fmt"
 
 //Реализовать быструю сортировку массива (quicksort) встроенными методами языка
 
-func quickSort(myArray []int, indxs ...int) {
+func quickSort(myArray []int, indxs ...int) { //Можно передавать массив не через ссылку, тк меняем его внутренности
 	var begin, end int
 	if len(indxs) == 0 {
 		begin = 0

@@ -1,9 +1,20 @@
 package main
 
+import "unicode/utf8"
+
 //К каким негативным последствиям может привести данный фрагмент кода, и как
 //это исправить? Приведите корректный пример реализации.
 
 var justString string
+
+func createHugeString(i int) (int, string) {
+	s := ""
+	for i > 0 {
+		s += "b"
+		i--
+	}
+	return utf8.RuneCountInString(s), s
+}
 
 func someFunc() {
 	v := createHugeString(1 << 10)
