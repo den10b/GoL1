@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+	"time"
 )
 
 // Реализовать постоянную запись данных в канал (главный поток). Реализовать
@@ -62,6 +63,7 @@ func main() {
 			}
 			ch <- i
 		}
+		time.Sleep(10 * time.Millisecond)
 	}
 
 }

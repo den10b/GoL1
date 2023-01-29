@@ -33,5 +33,5 @@ func main() {
 	}
 
 	fmt.Printf("%65b\n", result)
-	fmt.Printf("Резулльтат %d\n", result)
+	fmt.Printf("Результат: %d\n", result)
 }

@@ -26,7 +26,7 @@ func executer() {
 	for i := range ch1 { //При получении всех значений из канала и его закрытии - выходим из цикла
 		ch2 <- i * 2
 	}
-	close(ch2)
+	close(ch2) //Закрываем канал, тк в него отправлено все, что нужно
 }
 func reciever() {
 	defer wg.Done()
@@ -35,11 +35,11 @@ func reciever() {
 	}
 }
 func main() {
-	arr := []int{2, 4, 6, 8, 10}
+	arr := [5]int{2, 4, 6, 8, 10}
 	ch1 = make(chan int, len(arr))
 	ch2 = make(chan int, len(arr))
 	wg.Add(3)
-	go producer(arr)
+	go producer(arr[:])
 	go executer()
 	go reciever()
 	wg.Wait()

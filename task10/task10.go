@@ -8,9 +8,9 @@ import "fmt"
 // Пример: -20:{-25.0, -27.0, -21.0}, 10:{13.0, 19.0, 15.5}, 20: {24.5}, etc
 
 func roundFloat(val float64) int {
-	round := int(val)
-	rest := int(val) % 10
-	return round - rest // Находим нижнее кратное 10 число
+	round := int(val)     // округляем до целого
+	rest := int(val) % 10 // находим число в разряде единиц
+	return round - rest   // Находим нижнее кратное 10 число
 }
 
 func main() {

@@ -40,7 +40,7 @@ func mapThreadWriteChan(i int) {
 	mapp2 := <-ch //тк канал не буферизированный каждая горутина ждет пока другая горутина положит map в канал
 	mapp2.numbers[i] = i
 	wg.Done()
-	ch <- mapp2 // таком случае единовременно запись в канал может исполнять только одна горутина
+	ch <- mapp2 //В таком случае единовременно запись в канал может исполнять только одна горутина
 }
 
 func main() {
@@ -70,7 +70,7 @@ func main() {
 	wg.Add(n)
 	ch = make(chan mapThread)
 	for i := 0; i < n; i++ {
-		go mapThreadWriteChan(i) //конкурентная запись с через chan
+		go mapThreadWriteChan(i) //конкурентная запись через chan
 	}
 	ch <- mapThread{
 		numbers: map[int]int{},

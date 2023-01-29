@@ -79,7 +79,7 @@ func main() {
 		defer fmt.Println("Хватит работать")
 		for {
 			select {
-			case <-ctx.Done():
+			case <-ctx.Done(): // при получении каоманды происходит завершение гроутины
 				return
 			default:
 				fmt.Println("Работаем...")
@@ -90,6 +90,7 @@ func main() {
 	}(ctx)
 	time.Sleep(3 * time.Second)
 	cancel() //Используем функцию отмены, полученную при создании контекста
+
 	wg.Wait()
 	fmt.Println("Finish")
 

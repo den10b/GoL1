@@ -11,14 +11,14 @@ func reverseStrings(input []string) []string {
 	if len(input) == 0 {
 		return input
 	}
-	return append(reverseStrings(input[1:]), input[0])
+	return append(reverseStrings(input[1:]), input[0]) //После достижения функцией самого правого элемента в массиве - она начинает собирать строку в обратном порядке
 }
 func main() {
 	myString := "snow dog sun"
 	fmt.Println(myString)
 
-	wordsArr := strings.Fields(myString)
-	newString := strings.Join(reverseStrings(wordsArr), " ")
+	wordsArr := strings.Fields(myString)                     //разделяем по пробелам на массив слов
+	newString := strings.Join(reverseStrings(wordsArr), " ") //обьединяем массив строк в одну с разделителем-проблом
 	fmt.Println(newString)
 
 	newString = ""

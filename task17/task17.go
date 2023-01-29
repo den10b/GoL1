@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 //Реализовать бинарный поиск встроенными методами языка.
 
@@ -51,8 +54,9 @@ func binarySearchLoop(myArray []int, key int) (int, bool) { //Не рекурс�
 }
 
 func main() {
-	myArr := []int{1, 3, 5, 7, 9, 11, 15}
-	toFind := 7
+	myArr := []int{1, 3, 5, 7, 9, 11, 15, 18}
+	sort.Ints(myArr) //Бинарный поиск работает только на отсортированных массивах
+	toFind := 1
 
 	notLoopKey, notLoopFind := binarySearch(myArr, toFind)
 	fmt.Println(notLoopKey, notLoopFind)
