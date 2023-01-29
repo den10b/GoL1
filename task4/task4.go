@@ -20,8 +20,8 @@ var wg sync.WaitGroup
 func Work() {
 	defer wg.Done()
 	for {
-		num, op := <-ch //Так как мы пользуемся каналом, при его закрытии мы можем закончить работу всех воркеров
-		if op {
+		num, ok := <-ch //Так как мы пользуемся каналом, при его закрытии мы можем закончить работу всех воркеров
+		if ok {
 			log.Println(num)
 		} else {
 			log.Println("Worker остановлен")
@@ -41,19 +41,19 @@ func main() {
 	}
 	chCount := 2
 	c := make(chan os.Signal, chCount)
-	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, os.Interrupt) //При нажатии CTRL+C в канал C отправляется сигнал
 	for i := 0; i < wCount; i++ {
 		go Work()
 		wg.Add(1) // Запускаем N рабочих
 	}
 
 	i := 0
-	loop := true
-	for loop == true {
+	defer wg.Wait()
+	for {
 		select {
-		case <-c:
+		case <-c: //При получении сигнала из канала C, закрывается канал ch, в который отправляются данные воркерам
 			close(ch)
-			loop = false
+			return
 		default:
 			if i >= 100 {
 				i = 1
@@ -63,6 +63,5 @@ func main() {
 			ch <- i
 		}
 	}
-	wg.Wait()
 
 }

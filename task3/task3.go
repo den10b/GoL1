@@ -23,6 +23,13 @@ func squareMX(num int) {
 func squareChan(num int) {
 	old := <-ch
 	_, _ = fmt.Fprint(os.Stdout, old, "+=", num, "^2\n")
+	wg.Done()
+	ch <- old + (num * num)
+}
+
+func squareChanBuf(num int) {
+	old := <-ch
+	_, _ = fmt.Fprint(os.Stdout, old, "+=", num, "^2\n")
 	ch <- old + (num * num)
 	wg.Done()
 }
@@ -40,12 +47,24 @@ func main() {
 	_, _ = fmt.Fprint(os.Stdout, "Ответ: ", sum, "\n\n")
 
 	sum = 0
-	ch = make(chan int, len(arr))
-	ch <- 0
+	ch = make(chan int)
 	wg.Add(len(arr))
-	_, _ = fmt.Fprint(os.Stdout, "Через chan:\n")
+	_, _ = fmt.Fprint(os.Stdout, "Через небуф. chan:\n")
 	for _, num := range arr {
 		go squareChan(num) //Через WG+chan
+	}
+	ch <- 0
+	wg.Wait()
+	_, _ = fmt.Fprint(os.Stdout, "Ответ: ", <-ch, "\n")
+	close(ch)
+
+	sum = 0
+	ch = make(chan int, 1)
+	ch <- 0
+	wg.Add(len(arr))
+	_, _ = fmt.Fprint(os.Stdout, "Через буф. chan:\n")
+	for _, num := range arr {
+		go squareChanBuf(num) //Через WG+chan
 	}
 	wg.Wait()
 	_, _ = fmt.Fprint(os.Stdout, "Ответ: ", <-ch, "\n")
